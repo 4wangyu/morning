@@ -12,8 +12,6 @@ void main() async {
   String env = 'dev';
   final config = await AppConfig.forEnvironment(env);
 
-  RadioGaGa radio = new RadioGaGa();
-  radio.getFileList();
   // pass our config to our app
   runApp(AlarmApp(config));
 }

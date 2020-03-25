@@ -60,10 +60,10 @@ class MstreamPlayer {
     playlist.add(newSong);
 
     // If this the first song in the list
-    if (playlist.length == 1) {
-      positionCache = 0;
-      return _goToSong();
-    }
+    // if (playlist.length == 1) {
+    //   positionCache = 0;
+    //   return goToSong();
+    // }
 
     // Cache song if appropriate
     PlayerObjectX oPlayer = getOtherPlayer();
@@ -106,17 +106,19 @@ class MstreamPlayer {
     _goToPreviousSong();
   }
 
-  goToSongAtPosition(index) {
+  goToSongAtPosition() {
+    positionCache = genRandomNum(0, playlist.length);
+    print(positionCache);
+
     try {
-      playlist[index];
+      playlist[positionCache];
     } catch (err) {
       return false;
     }
 
     _clearEnd();
 
-    positionCache = index;
-    _goToSong();
+    goToSong();
   }
 
   removeSongAtPosition(int position) {
@@ -150,7 +152,7 @@ class MstreamPlayer {
         _goToNextSong();
       } else if (shouldLoop == true) {
         positionCache = 0;
-        _goToSong();
+        goToSong();
       } else {
         positionCache = -1;
       }
@@ -161,7 +163,7 @@ class MstreamPlayer {
       if (shuffle == true) {
         _goToNextSong();
       } else {
-        _goToSong();
+        goToSong();
       }
     } else if (position < positionCache) {
       positionCache--;
@@ -219,7 +221,7 @@ class MstreamPlayer {
       }
 
       _clearEnd();
-      _goToSong();
+      goToSong();
       return true;
     }
 
@@ -230,7 +232,7 @@ class MstreamPlayer {
 
     _clearEnd();
     positionCache--;
-    return _goToSong();
+    return goToSong();
   }
 
   _goToNextSong() {
@@ -256,7 +258,7 @@ class MstreamPlayer {
       }
       // Go To Song
       _clearEnd();
-      _goToSong();
+      goToSong();
 
       // Remove duplicates from shuffle previous
       // for (int j = 0, len2 = shufflePrevious.length; j < len2; j++) {
@@ -275,7 +277,7 @@ class MstreamPlayer {
     } catch (e) {
       if (shouldLoop == true && playlist.length > 0) {
         positionCache = 0;
-        return _goToSong();
+        return goToSong();
       }
       playing = false;
       return false;
@@ -283,7 +285,7 @@ class MstreamPlayer {
 
     positionCache++;
     _clearEnd();
-    return _goToSong();
+    return goToSong();
   }
 
   PlayerObjectX playerA = new PlayerObjectX('default', new AudioPlayer(), null);
@@ -326,7 +328,7 @@ class MstreamPlayer {
   bool playing = false;
   // var volume = 100;
 
-  _goToSong() {
+  goToSong() {
     try {
       playlist[positionCache];
     } catch (e) {

@@ -16,6 +16,10 @@ class RadioGaGa {
 
   RadioGaGa();
 
+  void play() {
+    this.mStreamAudio.goToSongAtPosition();
+  }
+
   Future<void> getFileList() async {
     var res = await _makeServerCall(
         serverUrl, '/dirparser', {"dir": "music"}, 'POST');
