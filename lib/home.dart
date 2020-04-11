@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
+import 'package:ui_clock_and_alarm/screens/radio.dart';
 import 'package:ui_clock_and_alarm/services/radio_player.dart';
 import 'package:ui_clock_and_alarm/widgets/clock_painter.dart';
 import 'package:ui_clock_and_alarm/widgets/alarm_item.dart';
@@ -121,7 +122,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   ],
                 ),
               ),
-              Icon(Icons.radio),
+              Container(child: RadioPage()),
             ],
           ),
         ),
