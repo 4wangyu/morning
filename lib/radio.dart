@@ -13,15 +13,15 @@ class RadioGaGa {
   MstreamPlayer mStreamAudio;
 
   RadioGaGa() {
-    mStreamAudio = new MstreamPlayer();
-    getFileList();
+    this.mStreamAudio = new MstreamPlayer();
+    this.loadSongs();
   }
 
   void play() {
-    this.mStreamAudio.goToSongAtPosition();
+    this.mStreamAudio.playRandomSong();
   }
 
-  Future<void> getFileList() async {
+  Future<void> loadSongs() async {
     var res = await _makeServerCall(
         serverUrl, '/dirparser', {"dir": "music"}, 'POST');
     if (res == null) {

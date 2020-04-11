@@ -21,11 +21,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this, initialIndex: 0);
+    _tabController = TabController(length: 3, vsync: this, initialIndex: 0);
     _tabController.addListener(_handleTabIndex);
 
     radio = new RadioGaGa();
-    radio.getFileList();
 
     _timeString = _formatDateTime(DateTime.now());
     Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime());
@@ -50,6 +49,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       _timeString = formattedDateTime;
     });
 
+    // TODO: alarm trigger logic to be implemented
     if (formattedDateTime == '09:52' && !playing) {
       radio.play();
       playing = true;
@@ -65,7 +65,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).primaryColor,
@@ -79,8 +79,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 text: 'Clock',
               ),
               Tab(icon: Icon(Icons.alarm), text: 'Alarm'),
-              Tab(icon: Icon(Icons.hourglass_empty), text: 'Timer'),
-              Tab(icon: Icon(Icons.timer), text: 'Stopwatch'),
+              Tab(icon: Icon(Icons.radio), text: 'Radio'),
             ],
           ),
         ),
@@ -122,8 +121,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   ],
                 ),
               ),
-              Icon(Icons.hourglass_empty),
-              Icon(Icons.timer),
+              Icon(Icons.radio),
             ],
           ),
         ),

@@ -105,7 +105,7 @@ class MstreamPlayer {
     _goToPreviousSong();
   }
 
-  goToSongAtPosition() {
+  playRandomSong() {
     positionCache = genRandomNum(0, playlist.length);
     print(positionCache);
 
