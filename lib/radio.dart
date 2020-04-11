@@ -10,15 +10,15 @@ import 'mstream_player.dart';
 class RadioGaGa {
   var serverUrl = 'http://localhost:3030';
 
-  MstreamPlayer mStreamAudio;
+  MstreamPlayer mStreamPlayer;
 
   RadioGaGa() {
-    this.mStreamAudio = new MstreamPlayer();
+    this.mStreamPlayer = new MstreamPlayer();
     this.loadSongs();
   }
 
   void play() {
-    this.mStreamAudio.playRandomSong();
+    this.mStreamPlayer.playRandomSong();
   }
 
   Future<void> loadSongs() async {
@@ -33,7 +33,7 @@ class RadioGaGa {
       QueueItem song =
           new QueueItem(null, e['name'], url.toString(), null, null);
 
-      mStreamAudio.addSong(song);
+      mStreamPlayer.addSong(song);
     });
   }
 

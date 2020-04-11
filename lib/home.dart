@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:ui_clock_and_alarm/radio.dart';
-import 'package:ui_clock_and_alarm/shapes_painter.dart';
+import 'package:ui_clock_and_alarm/clock_painter.dart';
 import 'package:ui_clock_and_alarm/widgets/alarm_item.dart';
 
 class Home extends StatefulWidget {
@@ -94,7 +94,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     Padding(
                       padding: EdgeInsets.all(8.0),
                       child: CustomPaint(
-                        painter: ShapesPainter(),
+                        painter: ClockPainter(),
                         child: Container(
                           height: 500,
                         ),
