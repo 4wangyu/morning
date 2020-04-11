@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ui_clock_and_alarm/add_alarm.dart';
+import 'package:ui_clock_and_alarm/screens/add_alarm.dart';
 
-import 'app_config.dart';
+import 'config.dart';
 import 'home.dart';
 
 void main() async {

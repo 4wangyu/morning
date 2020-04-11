@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
-import 'models/queue_item.dart';
+import '../models/queue_item.dart';
 import 'mstream_player.dart';
 
 class RadioGaGa {

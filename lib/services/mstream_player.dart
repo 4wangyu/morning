@@ -4,8 +4,8 @@ import 'dart:math';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
-import 'models/player_object.dart';
-import 'models/queue_item.dart';
+import '../models/player_object.dart';
+import '../models/queue_item.dart';
 
 class MstreamPlayer {
   int positionCache = -1;
