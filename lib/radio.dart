@@ -5,16 +5,17 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
 import 'models/queue_item.dart';
-import 'models/server.dart';
-import 'models/song.dart';
 import 'mstream_player.dart';
 
 class RadioGaGa {
   var serverUrl = 'http://localhost:3030';
 
-  MstreamPlayer mStreamAudio = new MstreamPlayer();
+  MstreamPlayer mStreamAudio;
 
-  RadioGaGa();
+  RadioGaGa() {
+    mStreamAudio = new MstreamPlayer();
+    getFileList();
+  }
 
   void play() {
     this.mStreamAudio.goToSongAtPosition();

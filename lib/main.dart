@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:ui_clock_and_alarm/add_alarm.dart';
-import 'package:ui_clock_and_alarm/radio.dart';
 
 import 'app_config.dart';
 import 'home.dart';
@@ -17,7 +16,7 @@ void main() async {
 }
 
 class AlarmApp extends StatefulWidget {
-  var config;
+  final config;
   AlarmApp(this.config);
 
   _AlarmAppState createState() => _AlarmAppState(this.config);

@@ -50,12 +50,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       _timeString = formattedDateTime;
     });
 
-    if (formattedDateTime == '12:49' && !playing) {
+    if (formattedDateTime == '09:52' && !playing) {
       radio.play();
       playing = true;
     }
 
-    print(formattedDateTime);
+    // print(formattedDateTime);
   }
 
   String _formatDateTime(DateTime dateTime) {
