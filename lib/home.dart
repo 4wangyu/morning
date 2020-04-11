@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
-import 'package:ui_clock_and_alarm/services/radio.dart';
+import 'package:ui_clock_and_alarm/services/radio_player.dart';
 import 'package:ui_clock_and_alarm/widgets/clock_painter.dart';
 import 'package:ui_clock_and_alarm/widgets/alarm_item.dart';
 
