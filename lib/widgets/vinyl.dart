@@ -9,8 +9,8 @@ class Vinyl extends AnimatedWidget {
     final Animation<double> animation = listenable;
     return new Container(
       margin: new EdgeInsets.symmetric(vertical: 10.0),
-      height: 300.0,
-      width: 300.0,
+      height: 330.0,
+      width: 330.0,
       child: new RotationTransition(
           turns: animation,
           child: new Container(
