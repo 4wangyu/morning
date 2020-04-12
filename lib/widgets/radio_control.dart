@@ -1,13 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ui_clock_and_alarm/services/radio_player.dart';
 
 class BottomControls extends StatelessWidget {
-  var isPlaying = true;
-  Function pause;
-  Function play;
-  Function onPrevious;
-  Function onPlaying;
-  Function onNext;
+  final RadioGaGa radio = RadioGaGa();
+  final bool isPlaying = true;
+  final Function pause = null;
+  final Function play = null;
+  final Function onPrevious = null;
+  final Function onPlaying = null;
+  final Function onNext = null;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,7 @@ class BottomControls extends StatelessWidget {
             children: <Widget>[
               new IconButton(
                 onPressed: () {
-                  onPrevious();
+                  radio.playPrevious();
                 },
                 icon: new Icon(
                   Icons.skip_previous,
@@ -36,15 +38,11 @@ class BottomControls extends StatelessWidget {
               ),
               new IconButton(
                 onPressed: () {
-                  if (isPlaying)
-                    pause();
-                  else {
-                    play();
-                  }
-                  setState(() {
-                    isPlaying = !isPlaying;
-                    onPlaying(isPlaying);
-                  });
+                  radio.playPause();
+                  // setState(() {
+                  //   isPlaying = !isPlaying;
+                  //   onPlaying(isPlaying);
+                  // });
                 },
                 padding: const EdgeInsets.all(0.0),
                 icon: new Icon(
@@ -55,7 +53,7 @@ class BottomControls extends StatelessWidget {
               ),
               new IconButton(
                 onPressed: () {
-                  onNext();
+                  radio.playNext();
                 },
                 icon: new Icon(
                   Icons.skip_next,

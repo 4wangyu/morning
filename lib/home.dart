@@ -16,7 +16,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   String _timeString;
   TabController _tabController;
-  RadioGaGa radio;
+  RadioGaGa radio = RadioGaGa();
   bool playing = false;
 
   @override
@@ -24,8 +24,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     super.initState();
     _tabController = TabController(length: 3, vsync: this, initialIndex: 0);
     _tabController.addListener(_handleTabIndex);
-
-    radio = new RadioGaGa();
 
     _timeString = _formatDateTime(DateTime.now());
     Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime());
@@ -51,7 +49,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     });
 
     // TODO: alarm trigger logic to be implemented
-    if (formattedDateTime == '09:52' && !playing) {
+    if (formattedDateTime == '11:58' && !playing) {
       radio.play();
       playing = true;
     }

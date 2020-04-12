@@ -8,17 +8,35 @@ import '../models/queue_item.dart';
 import 'mstream_player.dart';
 
 class RadioGaGa {
+  static final RadioGaGa _instance = RadioGaGa._internal();
+
+  factory RadioGaGa() {
+    return _instance;
+  }
+
+  RadioGaGa._internal() {
+    mStreamPlayer = new MstreamPlayer();
+    this.loadSongs();
+  }
+
   var serverUrl = 'http://localhost:3030';
 
   MstreamPlayer mStreamPlayer;
 
-  RadioGaGa() {
-    this.mStreamPlayer = new MstreamPlayer();
-    this.loadSongs();
-  }
-
   void play() {
     this.mStreamPlayer.playRandomSong();
+  }
+
+  void playPause() {
+    this.mStreamPlayer.playPause();
+  }
+
+  void playNext() {
+    this.mStreamPlayer.nextSong();
+  }
+
+  void playPrevious() {
+    this.mStreamPlayer.previousSong();
   }
 
   Future<void> loadSongs() async {
