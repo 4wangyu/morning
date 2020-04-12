@@ -8,6 +8,10 @@ class AlarmProvider with ChangeNotifier {
   AlarmsDataBase _dataBase = AlarmsDataBase();
   List<AlarmModel> alarms = [];
 
+  AlarmProvider() {
+    this.fetchAlarms();
+  }
+
   Future<int> getNewAlarmId() async {
     //use the existing alarms to find the lowest empty id
     List<AlarmModel> _alarms = await fetchDateBaseAlarms();

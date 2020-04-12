@@ -2,7 +2,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:ui_clock_and_alarm/screens/radio.dart';
+import 'package:ui_clock_and_alarm/services/alarm_provider.dart';
 import 'package:ui_clock_and_alarm/services/radio_player.dart';
 import 'package:ui_clock_and_alarm/widgets/clock_painter.dart';
 import 'package:ui_clock_and_alarm/widgets/alarm_item.dart';
@@ -63,6 +65,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final alarmProvider = Provider.of<AlarmProvider>(context);
+    final alarmList = alarmProvider.alarms ?? [];
+
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -111,13 +116,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 ),
               ),
               Container(
-                child: ListView(
-                  children: <Widget>[
-                    alarmItem(_timeString, true),
-                    alarmItem(_timeString, true),
-                    alarmItem(_timeString, false),
-                    alarmItem(_timeString, false),
-                  ],
+                child: ListView.builder(
+                  itemCount: alarmList.length,
+                  itemBuilder: (context, idx) {
+                    return alarmItem(
+                        alarmList[idx].alarmTime, alarmList[idx].active == 1);
+                  },
                 ),
               ),
               Container(child: RadioPage()),
