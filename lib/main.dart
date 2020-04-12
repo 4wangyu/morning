@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ui_clock_and_alarm/screens/add_alarm.dart';
+import 'package:provider/provider.dart';
+import 'package:ui_clock_and_alarm/services/alarm_provider.dart';
 
 import 'config.dart';
 import 'home.dart';
@@ -29,16 +31,20 @@ class _AlarmAppState extends State<AlarmApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        initialRoute: '/',
-        routes: {
-          '/add-alarm': (context) => AddAlarm(),
-        },
-        theme: ThemeData(
-            fontFamily: 'SourceSansPro',
-            primaryColor: Color(0xff1B2C57),
-            accentColor: Color(0xff65D1BA)),
-        debugShowCheckedModeBanner: false,
-        home: Home());
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider.value(value: AlarmProvider()),
+        ],
+        child: MaterialApp(
+            initialRoute: '/',
+            routes: {
+              '/add-alarm': (context) => AddAlarm(),
+            },
+            theme: ThemeData(
+                fontFamily: 'SourceSansPro',
+                primaryColor: Color(0xff1B2C57),
+                accentColor: Color(0xff65D1BA)),
+            debugShowCheckedModeBanner: false,
+            home: Home()));
   }
 }
