@@ -51,10 +51,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     });
 
     // TODO: alarm trigger logic to be implemented
-    if (formattedDateTime == '11:58' && !playing) {
-      radio.play();
-      playing = true;
-    }
+    // if (formattedDateTime == '11:58' && !playing) {
+    //   radio.play();
+    //   playing = true;
+    // }
 
     // print(formattedDateTime);
   }
@@ -119,8 +119,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 child: ListView.builder(
                   itemCount: alarmList.length,
                   itemBuilder: (context, idx) {
-                    return alarmItem(
-                        alarmList[idx].alarmTime, alarmList[idx].active == 1);
+                    return AlarmItem(alarmList[idx]);
                   },
                 ),
               ),

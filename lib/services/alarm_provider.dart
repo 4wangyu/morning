@@ -9,7 +9,26 @@ class AlarmProvider with ChangeNotifier {
   List<AlarmModel> alarms = [];
 
   AlarmProvider() {
-    this.fetchAlarms();
+    this._fetchAlarms();
+  }
+
+  _fetchAlarms() async {
+    alarms = await fetchDateBaseAlarms();
+    _sortAlarms();
+    notifyListeners();
+  }
+
+  _sortAlarms() {
+    alarms.sort((a, b) => a.alarmTime.compareTo(b.alarmTime));
+  }
+
+  Future<List<AlarmModel>> fetchDateBaseAlarms() async {
+    List<AlarmModel> _alarms = [];
+    List<Map<String, dynamic>> _allAlarms = await _dataBase.getAllItem();
+    _allAlarms.forEach((alarm) {
+      return _alarms.add(AlarmModel.fromObj(alarm));
+    });
+    return _alarms;
   }
 
   Future<int> getNewAlarmId() async {
@@ -24,15 +43,11 @@ class AlarmProvider with ChangeNotifier {
     return id;
   }
 
-  static Future<void> scheduleAlarm() async {}
-
-  fetchAlarms() async {
-    alarms = await fetchDateBaseAlarms();
-    notifyListeners();
-  }
+  Future<void> scheduleAlarm() async {}
 
   void addAlarm(AlarmModel alarmModel) async {
     alarms.add(alarmModel);
+    _sortAlarms();
     await _dataBase.saveAlarm(alarmModel);
     scheduleAlarm();
     notifyListeners();
@@ -52,15 +67,5 @@ class AlarmProvider with ChangeNotifier {
     }
     await _dataBase.updateItem(id, alarms[index]);
     notifyListeners();
-  }
-
-  static Future<List<AlarmModel>> fetchDateBaseAlarms() async {
-    List<AlarmModel> _alarms = [];
-    AlarmsDataBase _alarmsDb = AlarmsDataBase();
-    List<Map<String, dynamic>> _allAlarms = await _alarmsDb.getAllItem();
-    _allAlarms.forEach((alarm) {
-      return _alarms.add(AlarmModel.fromObj(alarm));
-    });
-    return _alarms;
   }
 }
