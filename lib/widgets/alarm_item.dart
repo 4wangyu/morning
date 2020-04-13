@@ -16,7 +16,7 @@ class AlarmItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(17.0),
+      padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 17),
       child: Column(
         children: <Widget>[
           Row(

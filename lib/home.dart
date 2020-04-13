@@ -38,6 +38,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     super.dispose();
   }
 
+  // for display of add alarm button
   void _handleTabIndex() {
     setState(() {});
   }
@@ -60,7 +61,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
   String _formatDateTime(DateTime dateTime) {
-    return DateFormat('hh:mm').format(dateTime);
+    return DateFormat().add_jm().format(dateTime);
   }
 
   @override
@@ -90,6 +91,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         body: Container(
           color: Theme.of(context).primaryColor,
           child: TabBarView(
+            physics: NeverScrollableScrollPhysics(),
             controller: _tabController,
             children: [
               Container(
@@ -116,12 +118,14 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 ),
               ),
               Container(
-                child: ListView.builder(
-                  itemCount: alarmList.length,
-                  itemBuilder: (context, idx) {
-                    return AlarmItem(alarmList[idx]);
-                  },
-                ),
+                child: Padding(
+                    padding: EdgeInsets.only(top: 10.0),
+                    child: ListView.builder(
+                      itemCount: alarmList.length,
+                      itemBuilder: (context, idx) {
+                        return AlarmItem(alarmList[idx]);
+                      },
+                    )),
               ),
               Container(child: RadioPage()),
             ],
