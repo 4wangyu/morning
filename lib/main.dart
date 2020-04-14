@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ui_clock_and_alarm/screens/add_alarm.dart';
+import 'package:ui_clock_and_alarm/screens/add_update_alarm.dart';
 import 'package:provider/provider.dart';
 import 'package:ui_clock_and_alarm/services/alarm_provider.dart';
 
@@ -38,7 +38,7 @@ class _AlarmAppState extends State<AlarmApp> {
         child: MaterialApp(
             initialRoute: '/',
             routes: {
-              '/add-alarm': (context) => AddAlarm(),
+              '/add-update-alarm': (context) => AddUpdateAlarm(),
             },
             theme: ThemeData(
                 fontFamily: 'SourceSansPro',

@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ui_clock_and_alarm/models/alarm_model.dart';
 import 'package:ui_clock_and_alarm/services/alarm_provider.dart';
+import 'package:ui_clock_and_alarm/widgets/alarm_item.dart';
 import 'package:ui_clock_and_alarm/widgets/circle_day.dart';
 
-class AddAlarm extends StatefulWidget {
-  AddAlarm({Key key}) : super(key: key);
+class AddUpdateAlarm extends StatefulWidget {
+  AddUpdateAlarm({Key key}) : super(key: key);
 
-  _AddAlarmState createState() => _AddAlarmState();
+  _AddUpdateAlarmState createState() => _AddUpdateAlarmState();
 }
 
-class _AddAlarmState extends State<AddAlarm> {
+class _AddUpdateAlarmState extends State<AddUpdateAlarm> {
   TimeOfDay _selectedTime;
   List<String> alarmDays = List.filled(7, '0');
+  AlarmModel alarm;
+  int alarmIndex;
 
   @override
   void initState() {
@@ -31,9 +34,19 @@ class _AddAlarmState extends State<AddAlarm> {
         _selectedTime.minute.toString().padLeft(2, '0');
   }
 
+  bool get _isUpdate {
+    return alarm != null;
+  }
+
   @override
   Widget build(BuildContext context) {
     final alarmProvider = Provider.of<AlarmProvider>(context);
+    final UpdateAlarmArguments args = ModalRoute.of(context).settings.arguments;
+    if (args != null) {
+      alarm = args.alarm;
+      alarmIndex = args.alarmIndex;
+      print(alarm);
+    }
 
     return Scaffold(
       backgroundColor: Color(0xff1B2C57),
@@ -45,7 +58,7 @@ class _AddAlarmState extends State<AddAlarm> {
               Icons.alarm_add,
               color: Color(0xff65D1BA),
             ),
-            Text('Add alarm',
+            Text(_isUpdate ? 'Update Alarm' : 'Add Alarm',
                 style: TextStyle(color: Color(0xff65D1BA), fontSize: 25.0))
           ],
         ),

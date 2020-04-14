@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ui_clock_and_alarm/services/radio_player.dart';
 
-class BottomControls extends StatelessWidget {
+class RadioControls extends StatelessWidget {
   final RadioGaGa radio = RadioGaGa();
   final bool isPlaying = true;
   final Function pause = null;

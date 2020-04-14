@@ -53,13 +53,13 @@ class AlarmProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteAlarms(id, index) async {
+  void deleteAlarm(id, index) async {
     alarms.removeAt(index);
     notifyListeners();
     await _dataBase.deleteItem(id);
   }
 
-  void updateAlarmsActivity(id, index) async {
+  void updateAlarmStatus(id, index) async {
     if (alarms[index].active == 0) {
       alarms[index].active = 1;
     } else {

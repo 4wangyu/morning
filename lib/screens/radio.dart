@@ -39,7 +39,7 @@ class _RadioPageState extends State<RadioPage> with TickerProviderStateMixin {
               child: Vinyl(animation: _commonTween.animate(vinylController)),
               margin: EdgeInsets.only(top: 80.0),
             ),
-            BottomControls()
+            RadioControls()
           ],
         ));
   }

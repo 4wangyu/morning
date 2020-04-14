@@ -123,7 +123,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     child: ListView.builder(
                       itemCount: alarmList.length,
                       itemBuilder: (context, idx) {
-                        return AlarmItem(alarmList[idx]);
+                        return AlarmItem(alarmList[idx], idx);
                       },
                     )),
               ),
@@ -131,16 +131,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             ],
           ),
         ),
-        floatingActionButton: _bottomButtons(),
+        floatingActionButton: _addAlarmButton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
     );
   }
 
-  Widget _bottomButtons() {
+  Widget _addAlarmButton() {
     return _tabController.index == 1
         ? FloatingActionButton(
-            onPressed: () => Navigator.pushNamed(context, '/add-alarm'),
+            onPressed: () => Navigator.pushNamed(context, '/add-update-alarm'),
             backgroundColor: Color(0xff65D1BA),
             child: Icon(
               Icons.add,
