@@ -10,6 +10,7 @@ import 'mstream_player.dart';
 class RadioGaGa with ChangeNotifier {
   static final RadioGaGa _instance = RadioGaGa._internal();
   bool isPlaying = false;
+  bool hasPlayed = false;
 
   factory RadioGaGa() {
     return _instance;
@@ -28,23 +29,31 @@ class RadioGaGa with ChangeNotifier {
     this.mStreamPlayer.playRandomSong();
     isPlaying = true;
     notifyListeners();
+    hasPlayed = true;
   }
 
   void playPause() {
-    this.mStreamPlayer.playPause();
-    isPlaying = !isPlaying;
-    notifyListeners();
+    if (hasPlayed) {
+      this.mStreamPlayer.playPause();
+      isPlaying = !isPlaying;
+      notifyListeners();
+    } else {
+      play();
+    }
   }
 
   void playNext() {
-    this.mStreamPlayer.nextSong();
+    mStreamPlayer.nextSong();
     isPlaying = true;
+    hasPlayed = true;
     notifyListeners();
   }
 
   void playPrevious() {
     this.mStreamPlayer.previousSong();
-    isPlaying = true;
+    if (mStreamPlayer.playing) {
+      isPlaying = true;
+    }
     notifyListeners();
   }
 

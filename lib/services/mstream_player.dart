@@ -65,18 +65,18 @@ class MstreamPlayer {
     // }
 
     // Cache song if appropriate
-    PlayerObjectX oPlayer = getOtherPlayer();
-    if ((oPlayer.songObject == null && cacheTimer == null)) {
-      try {
-        playlist[positionCache + 1]; // Check if this exists
-        if (cacheTimer != null) {
-          cacheTimer.cancel();
-        }
-        cacheTimer = new Timer(new Duration(seconds: cacheTimeout), () {
-          _setCachedSong(positionCache + 1);
-        });
-      } catch (err) {}
-    }
+    // PlayerObjectX oPlayer = getOtherPlayer();
+    // if ((oPlayer.songObject == null && cacheTimer == null)) {
+    //   try {
+    //     playlist[positionCache + 1]; // Check if this exists
+    //     if (cacheTimer != null) {
+    //       cacheTimer.cancel();
+    //     }
+    //     cacheTimer = new Timer(new Duration(seconds: cacheTimeout), () {
+    //       _setCachedSong(positionCache + 1);
+    //     });
+    //   } catch (err) {}
+    // }
   }
 
   clearAndPlay() {
