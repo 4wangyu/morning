@@ -19,7 +19,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   String _timeString;
   TabController _tabController;
   RadioGaGa radio = RadioGaGa();
-  bool playing = false;
   AlarmProvider alarmProvider;
 
   @override
@@ -49,23 +48,15 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     final String formattedDateTime = _formatDateTime(now);
 
     if (AlarmProvider.nextAlarm != null) {
-      int diffMins = _constructTime(now.minute, now.hour)
-          .difference(AlarmProvider.nextAlarm)
-          .inMinutes;
-      if (diffMins == 0 && !playing) {
+      int diffSeconds = now.difference(AlarmProvider.nextAlarm).inSeconds;
+      if (diffSeconds == 0 && !radio.isPlaying) {
         radio.play();
-        playing = true;
       }
     }
 
     setState(() {
       _timeString = formattedDateTime;
     });
-  }
-
-  DateTime _constructTime(int min, int hr, [int day]) {
-    DateTime n = DateTime.now();
-    return DateTime(n.year, n.month, day ?? n.day, hr, min);
   }
 
   String _formatDateTime(DateTime dateTime) {

@@ -69,7 +69,6 @@ class AlarmProvider with ChangeNotifier {
               _constructTime(int.parse(alarm.alarmTime.substring(2, 4)),
                       int.parse(alarm.alarmTime.substring(0, 2)))
                   .isAfter(today)) {
-            print(today.day);
             return _constructTime(
               int.parse(alarm.alarmTime.substring(2, 4)),
               int.parse(alarm.alarmTime.substring(0, 2)),

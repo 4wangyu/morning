@@ -7,8 +7,9 @@ import 'package:http/http.dart' as http;
 import '../models/queue_item.dart';
 import 'mstream_player.dart';
 
-class RadioGaGa {
+class RadioGaGa with ChangeNotifier {
   static final RadioGaGa _instance = RadioGaGa._internal();
+  bool isPlaying = false;
 
   factory RadioGaGa() {
     return _instance;
@@ -25,18 +26,26 @@ class RadioGaGa {
 
   void play() {
     this.mStreamPlayer.playRandomSong();
+    isPlaying = true;
+    notifyListeners();
   }
 
   void playPause() {
     this.mStreamPlayer.playPause();
+    isPlaying = !isPlaying;
+    notifyListeners();
   }
 
   void playNext() {
     this.mStreamPlayer.nextSong();
+    isPlaying = true;
+    notifyListeners();
   }
 
   void playPrevious() {
     this.mStreamPlayer.previousSong();
+    isPlaying = true;
+    notifyListeners();
   }
 
   Future<void> loadSongs() async {

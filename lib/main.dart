@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ui_clock_and_alarm/screens/add_update_alarm.dart';
 import 'package:provider/provider.dart';
 import 'package:ui_clock_and_alarm/services/alarm_provider.dart';
+import 'package:ui_clock_and_alarm/services/radio_player.dart';
 
 import 'config.dart';
 import 'home.dart';
@@ -34,6 +35,7 @@ class _AlarmAppState extends State<AlarmApp> {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider.value(value: AlarmProvider()),
+          ChangeNotifierProvider.value(value: RadioGaGa()),
         ],
         child: MaterialApp(
             initialRoute: '/',
