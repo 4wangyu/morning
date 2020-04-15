@@ -49,8 +49,17 @@ class AlarmProvider with ChangeNotifier {
     alarms.add(alarmModel);
     _sortAlarms();
     await _dataBase.saveAlarm(alarmModel);
-    scheduleAlarm();
+
     notifyListeners();
+    scheduleAlarm();
+  }
+
+  void updateAlarm(AlarmModel alarmModel, int index) async {
+    alarms[index] = alarmModel;
+    _sortAlarms();
+    notifyListeners();
+    scheduleAlarm();
+    await _dataBase.updateItem(alarmModel.id, alarmModel);
   }
 
   void deleteAlarm(id, index) async {

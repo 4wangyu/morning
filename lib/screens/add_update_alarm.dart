@@ -29,7 +29,7 @@ class _AddUpdateAlarmState extends State<AddUpdateAlarm> {
     });
   }
 
-  String formatTimeOfDay() {
+  String _formatTimeOfDay() {
     return _selectedTime.hour.toString().padLeft(2, '0') +
         _selectedTime.minute.toString().padLeft(2, '0');
   }
@@ -42,10 +42,15 @@ class _AddUpdateAlarmState extends State<AddUpdateAlarm> {
   Widget build(BuildContext context) {
     final alarmProvider = Provider.of<AlarmProvider>(context);
     final UpdateAlarmArguments args = ModalRoute.of(context).settings.arguments;
-    if (args != null) {
+    if (args != null && alarm == null) {
       alarm = args.alarm;
       alarmIndex = args.alarmIndex;
-      print(alarm);
+
+      _selectedTime = TimeOfDay(
+          hour: int.parse(alarm.alarmTime.substring(0, 2)),
+          minute: int.parse(alarm.alarmTime.substring(2, 4)));
+
+      alarmDays = alarm.alarmDays.split('');
     }
 
     return Scaffold(
@@ -123,11 +128,21 @@ class _AddUpdateAlarmState extends State<AddUpdateAlarm> {
                     child: Text('Save',
                         style: TextStyle(fontSize: 20, color: Colors.white)),
                     onPressed: () async {
-                      alarmProvider.addAlarm(AlarmModel(
-                        id: await alarmProvider.getNewAlarmId(),
-                        alarmTime: formatTimeOfDay(),
-                        alarmDays: alarmDays.join(''),
-                      ));
+                      if (_isUpdate) {
+                        alarmProvider.updateAlarm(
+                            AlarmModel(
+                              id: alarm.id,
+                              alarmTime: _formatTimeOfDay(),
+                              alarmDays: alarmDays.join(''),
+                            ),
+                            alarmIndex);
+                      } else {
+                        alarmProvider.addAlarm(AlarmModel(
+                          id: await alarmProvider.getNewAlarmId(),
+                          alarmTime: _formatTimeOfDay(),
+                          alarmDays: alarmDays.join(''),
+                        ));
+                      }
 
                       Navigator.of(context).pop();
                     })
