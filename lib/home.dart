@@ -20,6 +20,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   TabController _tabController;
   RadioGaGa radio = RadioGaGa();
   bool playing = false;
+  AlarmProvider alarmProvider;
 
   @override
   void initState() {
@@ -47,17 +48,24 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     final DateTime now = DateTime.now();
     final String formattedDateTime = _formatDateTime(now);
 
+    if (AlarmProvider.nextAlarm != null) {
+      int diffMins = _constructTime(now.minute, now.hour)
+          .difference(AlarmProvider.nextAlarm)
+          .inMinutes;
+      if (diffMins == 0 && !playing) {
+        radio.play();
+        playing = true;
+      }
+    }
+
     setState(() {
       _timeString = formattedDateTime;
     });
+  }
 
-    // TODO: alarm trigger logic to be implemented
-    // if (formattedDateTime == '11:58' && !playing) {
-    //   radio.play();
-    //   playing = true;
-    // }
-
-    // print(formattedDateTime);
+  DateTime _constructTime(int min, int hr, [int day]) {
+    DateTime n = DateTime.now();
+    return DateTime(n.year, n.month, day ?? n.day, hr, min);
   }
 
   String _formatDateTime(DateTime dateTime) {
@@ -67,6 +75,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final alarmProvider = Provider.of<AlarmProvider>(context);
+    // this.alarmProvider = alarmProvider;
     final alarmList = alarmProvider.alarms ?? [];
 
     return DefaultTabController(
