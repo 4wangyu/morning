@@ -1,12 +1,12 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
+
 import 'package:flutter/cupertino.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ui_clock_and_alarm/screens/radio.dart';
+import 'package:ui_clock_and_alarm/screens/clock_page.dart';
+import 'package:ui_clock_and_alarm/screens/radio_page.dart';
 import 'package:ui_clock_and_alarm/services/alarm_provider.dart';
 import 'package:ui_clock_and_alarm/services/radio_player.dart';
-import 'package:ui_clock_and_alarm/widgets/clock_painter.dart';
 import 'package:ui_clock_and_alarm/widgets/alarm_item.dart';
 
 import 'models/alarm_model.dart';
@@ -18,7 +18,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
-  String _timeString;
   TabController _tabController;
   RadioGaGa radio = RadioGaGa();
   AlarmProvider alarmProvider = AlarmProvider();
@@ -29,7 +28,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     _tabController = TabController(length: 3, vsync: this, initialIndex: 0);
     _tabController.addListener(_handleTabIndex);
 
-    _timeString = _formatDateTime(DateTime.now());
     Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime());
   }
 
@@ -51,13 +49,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   void _getTime() {
     final DateTime now = DateTime.now();
-    final String formattedDateTime = _formatDateTime(now);
 
     if (AlarmProvider.nextAlarmTime != null) {
       int diffSeconds = now.difference(AlarmProvider.nextAlarmTime).inSeconds;
 
-      print(AlarmProvider.nextAlarmTime);
-      print(diffSeconds);
+      // print(AlarmProvider.nextAlarmTime);
+      // print(diffSeconds);
 
       if (diffSeconds == 0) {
         if (_isAlarmOneTime(alarmProvider.nextAlarm)) {
@@ -71,14 +68,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         }
       }
     }
-
-    setState(() {
-      _timeString = formattedDateTime;
-    });
-  }
-
-  String _formatDateTime(DateTime dateTime) {
-    return DateFormat().add_jm().format(dateTime);
   }
 
   @override
@@ -111,29 +100,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             physics: NeverScrollableScrollPhysics(),
             controller: _tabController,
             children: [
-              Container(
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: CustomPaint(
-                        painter: ClockPainter(),
-                        child: Container(
-                          height: 500,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      _timeString.toString(),
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 50.0,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'SourceSansPro'),
-                    )
-                  ],
-                ),
-              ),
+              ClockPage(),
               Container(
                 child: Padding(
                     padding: EdgeInsets.only(top: 10.0),

@@ -9,7 +9,7 @@ class RadioControls extends StatelessWidget {
     final radioProvider = Provider.of<RadioGaGa>(context);
 
     return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 70),
+        padding: const EdgeInsets.symmetric(vertical: 80),
         child: new Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -23,7 +23,7 @@ class RadioControls extends StatelessWidget {
                   Icons.skip_previous,
                   color: Colors.white,
                 ),
-                iconSize: 60),
+                iconSize: 50),
             new IconButton(
                 onPressed: () {
                   radioProvider.playPause();
@@ -42,7 +42,7 @@ class RadioControls extends StatelessWidget {
                   Icons.skip_next,
                   color: Colors.white,
                 ),
-                iconSize: 60),
+                iconSize: 50),
           ],
         ));
   }
