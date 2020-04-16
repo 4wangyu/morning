@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:ui_clock_and_alarm/widgets/clock_painter.dart';
+import 'package:morning/widgets/clock_painter.dart';
 
 class ClockPage extends StatefulWidget {
   @override

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ui_clock_and_alarm/models/alarm_model.dart';
-import 'package:ui_clock_and_alarm/services/alarm_provider.dart';
-import 'package:ui_clock_and_alarm/widgets/alarm_item.dart';
-import 'package:ui_clock_and_alarm/widgets/circle_day.dart';
+import 'package:morning/models/alarm_model.dart';
+import 'package:morning/services/alarm_provider.dart';
+import 'package:morning/widgets/alarm_item.dart';
+import 'package:morning/widgets/circle_day.dart';
 
 class AddUpdateAlarm extends StatefulWidget {
   AddUpdateAlarm({Key key}) : super(key: key);

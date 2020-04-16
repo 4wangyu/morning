@@ -1,5 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
-import 'package:ui_clock_and_alarm/models/queue_item.dart';
+import 'package:morning/models/queue_item.dart';
 
 class PlayerObjectX {
   String playerType;

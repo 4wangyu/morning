@@ -1,4 +1,4 @@
-package com.example.ui_clock_and_alarm
+package com.example.morning
 
 import android.os.Bundle
 

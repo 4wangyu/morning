@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ui_clock_and_alarm/services/radio_player.dart';
-import 'package:ui_clock_and_alarm/widgets/radio_control.dart';
-import 'package:ui_clock_and_alarm/widgets/vinyl.dart';
+import 'package:morning/services/radio_player.dart';
+import 'package:morning/widgets/radio_control.dart';
+import 'package:morning/widgets/vinyl.dart';
 
 class RadioPage extends StatefulWidget {
   @override

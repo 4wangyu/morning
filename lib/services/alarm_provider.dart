@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:ui_clock_and_alarm/models/alarm_model.dart';
-import 'package:ui_clock_and_alarm/services/alarms_database.dart';
+import 'package:morning/models/alarm_model.dart';
+import 'package:morning/services/alarms_database.dart';
 
 class AlarmProvider with ChangeNotifier {
   static final AlarmProvider _instance = AlarmProvider._internal();

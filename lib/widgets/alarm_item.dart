@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ui_clock_and_alarm/models/alarm_model.dart';
+import 'package:morning/models/alarm_model.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:ui_clock_and_alarm/services/alarm_provider.dart';
+import 'package:morning/services/alarm_provider.dart';
 
 class AlarmItem extends StatelessWidget {
   final AlarmModel alarm;

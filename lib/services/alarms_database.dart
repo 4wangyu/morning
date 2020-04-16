@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'package:ui_clock_and_alarm/models/alarm_model.dart';
+import 'package:morning/models/alarm_model.dart';
 
 class AlarmsDataBase {
   Database _db;

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ui_clock_and_alarm/services/radio_player.dart';
+import 'package:morning/services/radio_player.dart';
 
 class RadioControls extends StatelessWidget {
   @override
