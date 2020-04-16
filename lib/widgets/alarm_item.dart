@@ -60,7 +60,7 @@ class AlarmItem extends StatelessWidget {
                 CupertinoSwitch(
                   value: alarm.active == 1,
                   onChanged: (bool val) {
-                    alarmProvider.updateAlarmStatus(alarm.id, alarmIndex);
+                    alarmProvider.updateAlarmStatus(alarm.id);
                   },
                   activeColor: Color(0xff65D1BA),
                 ),

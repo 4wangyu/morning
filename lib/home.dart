@@ -9,6 +9,8 @@ import 'package:ui_clock_and_alarm/services/radio_player.dart';
 import 'package:ui_clock_and_alarm/widgets/clock_painter.dart';
 import 'package:ui_clock_and_alarm/widgets/alarm_item.dart';
 
+import 'models/alarm_model.dart';
+
 class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);
 
@@ -19,7 +21,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   String _timeString;
   TabController _tabController;
   RadioGaGa radio = RadioGaGa();
-  AlarmProvider alarmProvider;
+  AlarmProvider alarmProvider = AlarmProvider();
 
   @override
   void initState() {
@@ -43,14 +45,30 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     setState(() {});
   }
 
+  bool _isAlarmOneTime(AlarmModel alarm) {
+    return int.parse(alarm.alarmDays) == 0;
+  }
+
   void _getTime() {
     final DateTime now = DateTime.now();
     final String formattedDateTime = _formatDateTime(now);
 
-    if (AlarmProvider.nextAlarm != null) {
-      int diffSeconds = now.difference(AlarmProvider.nextAlarm).inSeconds;
-      if (diffSeconds == 0 && !radio.isPlaying) {
-        radio.play();
+    if (AlarmProvider.nextAlarmTime != null) {
+      int diffSeconds = now.difference(AlarmProvider.nextAlarmTime).inSeconds;
+
+      print(AlarmProvider.nextAlarmTime);
+      print(diffSeconds);
+
+      if (diffSeconds == 0) {
+        if (_isAlarmOneTime(alarmProvider.nextAlarm)) {
+          alarmProvider.updateAlarmStatus(alarmProvider.nextAlarm.id);
+        } else {
+          alarmProvider.scheduleAlarm();
+        }
+
+        if (!radio.isPlaying) {
+          radio.play();
+        }
       }
     }
 
@@ -66,7 +84,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final alarmProvider = Provider.of<AlarmProvider>(context);
-    // this.alarmProvider = alarmProvider;
     final alarmList = alarmProvider.alarms ?? [];
 
     return DefaultTabController(

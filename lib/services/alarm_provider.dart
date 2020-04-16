@@ -5,19 +5,26 @@ import 'package:ui_clock_and_alarm/models/alarm_model.dart';
 import 'package:ui_clock_and_alarm/services/alarms_database.dart';
 
 class AlarmProvider with ChangeNotifier {
-  AlarmsDataBase _dataBase = AlarmsDataBase();
-  List<AlarmModel> alarms = [];
-  static DateTime nextAlarm;
+  static final AlarmProvider _instance = AlarmProvider._internal();
 
-  AlarmProvider() {
+  factory AlarmProvider() {
+    return _instance;
+  }
+
+  AlarmProvider._internal() {
     this._fetchAlarms();
   }
+
+  AlarmsDataBase _dataBase = AlarmsDataBase();
+  List<AlarmModel> alarms = [];
+  static DateTime nextAlarmTime;
+  AlarmModel nextAlarm;
 
   _fetchAlarms() async {
     alarms = await _fetchDateBaseAlarms();
     _sortAlarms();
     notifyListeners();
-    _scheduleAlarm();
+    scheduleAlarm();
   }
 
   _sortAlarms() {
@@ -45,22 +52,29 @@ class AlarmProvider with ChangeNotifier {
     return id;
   }
 
-  _scheduleAlarm() {
+  scheduleAlarm() {
     List<AlarmModel> activeAlarms =
         alarms.where((alarm) => alarm.active == 1).toList();
-    DateTime alarm;
+    DateTime alarmTime;
+    AlarmModel alarm;
     activeAlarms.forEach((a) {
       DateTime earliestAlarm = _getNextAlarm(a);
-      if (alarm == null || earliestAlarm.isBefore(alarm)) {
-        alarm = earliestAlarm;
+      if (alarmTime == null || earliestAlarm.isBefore(alarmTime)) {
+        alarmTime = earliestAlarm;
+        alarm = a;
       }
     });
+    nextAlarmTime = alarmTime;
     nextAlarm = alarm;
+  }
+
+  bool _isAlarmOneTime(AlarmModel alarm) {
+    return int.parse(alarm.alarmDays) == 0;
   }
 
   DateTime _getNextAlarm(AlarmModel alarm) {
     DateTime today = DateTime.now();
-    if (int.parse(alarm.alarmDays) > 0) {
+    if (!_isAlarmOneTime(alarm)) {
       // repeated alarm
       int weekday = today.weekday;
       for (var i = 0; i < 8; i++) {
@@ -105,7 +119,7 @@ class AlarmProvider with ChangeNotifier {
     alarms.add(alarmModel);
     _sortAlarms();
     notifyListeners();
-    _scheduleAlarm();
+    scheduleAlarm();
     await _dataBase.saveAlarm(alarmModel);
   }
 
@@ -113,25 +127,22 @@ class AlarmProvider with ChangeNotifier {
     alarms[index] = alarmModel;
     _sortAlarms();
     notifyListeners();
-    _scheduleAlarm();
+    scheduleAlarm();
     await _dataBase.updateItem(alarmModel.id, alarmModel);
   }
 
   void deleteAlarm(id, index) async {
     alarms.removeAt(index);
     notifyListeners();
-    _scheduleAlarm();
+    scheduleAlarm();
     await _dataBase.deleteItem(id);
   }
 
-  void updateAlarmStatus(id, index) async {
-    if (alarms[index].active == 0) {
-      alarms[index].active = 1;
-    } else {
-      alarms[index].active = 0;
-    }
+  void updateAlarmStatus(id) async {
+    AlarmModel alarm = alarms.firstWhere((a) => a.id == id);
+    alarm.active = 1 - alarm.active;
     notifyListeners();
-    _scheduleAlarm();
-    await _dataBase.updateItem(id, alarms[index]);
+    scheduleAlarm();
+    await _dataBase.updateItem(id, alarm);
   }
 }
