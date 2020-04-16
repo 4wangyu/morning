@@ -27,15 +27,17 @@ class RadioGaGa with ChangeNotifier {
 
   void play() {
     this.mStreamPlayer.playRandomSong();
-    isPlaying = true;
+    isPlaying = mStreamPlayer.playing;
     notifyListeners();
-    hasPlayed = true;
+    if (isPlaying) {
+      hasPlayed = true;
+    }
   }
 
   void playPause() {
     if (hasPlayed) {
       this.mStreamPlayer.playPause();
-      isPlaying = !isPlaying;
+      isPlaying = mStreamPlayer.playing;
       notifyListeners();
     } else {
       play();
@@ -44,15 +46,18 @@ class RadioGaGa with ChangeNotifier {
 
   void playNext() {
     mStreamPlayer.nextSong();
-    isPlaying = true;
-    hasPlayed = true;
+    isPlaying = mStreamPlayer.playing;
+    if (isPlaying) {
+      hasPlayed = true;
+    }
     notifyListeners();
   }
 
   void playPrevious() {
     this.mStreamPlayer.previousSong();
-    if (mStreamPlayer.playing) {
-      isPlaying = true;
+    isPlaying = mStreamPlayer.playing;
+    if (isPlaying) {
+      hasPlayed = true;
     }
     notifyListeners();
   }
