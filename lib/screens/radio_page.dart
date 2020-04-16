@@ -44,7 +44,6 @@ class _RadioPageState extends State<RadioPage> with TickerProviderStateMixin {
         turning = false;
       }
     }
-    print('radio page refresh');
 
     return Scaffold(
         backgroundColor: Color(0xff1B2C57),

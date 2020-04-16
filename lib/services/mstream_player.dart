@@ -107,7 +107,6 @@ class MstreamPlayer {
 
   playRandomSong() {
     positionCache = genRandomNum(0, playlist.length);
-    print(positionCache);
 
     try {
       playlist[positionCache];
