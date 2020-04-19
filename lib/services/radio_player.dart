@@ -3,12 +3,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:morning/config.dart';
 
 import '../models/queue_item.dart';
 import 'mstream_player.dart';
 
 class RadioGaGa with ChangeNotifier {
   static final RadioGaGa _instance = RadioGaGa._internal();
+  MstreamPlayer mStreamPlayer;
   bool isPlaying = false;
   bool hasPlayed = false;
 
@@ -20,10 +22,6 @@ class RadioGaGa with ChangeNotifier {
     mStreamPlayer = new MstreamPlayer();
     this.loadSongs();
   }
-
-  var serverUrl = 'http://localhost:3030';
-
-  MstreamPlayer mStreamPlayer;
 
   void play() {
     this.mStreamPlayer.playRandomSong();
@@ -63,6 +61,10 @@ class RadioGaGa with ChangeNotifier {
   }
 
   Future<void> loadSongs() async {
+    final String env = 'pro';
+    final config = await AppConfig.forEnvironment(env);
+    var serverUrl = config.apiUrl;
+
     var res = await _makeServerCall(
         serverUrl, '/dirparser', {"dir": "music"}, 'POST');
     if (res == null) {

@@ -1,34 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:morning/screens/add_update_alarm.dart';
-import 'package:provider/provider.dart';
 import 'package:morning/services/alarm_provider.dart';
 import 'package:morning/services/radio_player.dart';
+import 'package:provider/provider.dart';
 
-import 'config.dart';
 import 'home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  String env = 'dev';
-  final config = await AppConfig.forEnvironment(env);
-
-  // pass our config to our app
-  runApp(AlarmApp(config));
+  runApp(AlarmApp());
 }
 
 class AlarmApp extends StatefulWidget {
-  final config;
-  AlarmApp(this.config);
+  AlarmApp();
 
-  _AlarmAppState createState() => _AlarmAppState(this.config);
+  _AlarmAppState createState() => _AlarmAppState();
 }
 
 class _AlarmAppState extends State<AlarmApp> {
-  var config;
-
-  _AlarmAppState(this.config);
+  _AlarmAppState();
 
   @override
   Widget build(BuildContext context) {
