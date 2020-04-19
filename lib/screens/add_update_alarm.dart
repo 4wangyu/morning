@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:morning/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:morning/models/alarm_model.dart';
 import 'package:morning/services/alarm_provider.dart';
@@ -54,17 +55,17 @@ class _AddUpdateAlarmState extends State<AddUpdateAlarm> {
     }
 
     return Scaffold(
-      backgroundColor: Color(0xff1B2C57),
+      backgroundColor: primaryColor,
       appBar: AppBar(
-        backgroundColor: Color(0xff1B2C57),
+        backgroundColor: primaryColor,
         title: Column(
           children: <Widget>[
             Icon(
               Icons.alarm_add,
-              color: Color(0xff65D1BA),
+              color: accentColor,
             ),
             Text(_isUpdate ? 'Update Alarm' : 'Add Alarm',
-                style: TextStyle(color: Color(0xff65D1BA), fontSize: 25.0))
+                style: TextStyle(color: accentColor, fontSize: 25.0))
           ],
         ),
       ),
@@ -124,7 +125,7 @@ class _AddUpdateAlarmState extends State<AddUpdateAlarm> {
                   height: 60.0,
                 ),
                 FlatButton(
-                    color: Theme.of(context).accentColor,
+                    color: accentColor,
                     child: Text('Save',
                         style: TextStyle(fontSize: 20, color: Colors.white)),
                     onPressed: () async {

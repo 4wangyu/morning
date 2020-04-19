@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:morning/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:morning/services/radio_player.dart';
 import 'package:morning/widgets/radio_control.dart';
@@ -46,7 +47,7 @@ class _RadioPageState extends State<RadioPage> with TickerProviderStateMixin {
     }
 
     return Scaffold(
-        backgroundColor: Color(0xff1B2C57),
+        backgroundColor: primaryColor,
         body: Column(
           children: <Widget>[
             new Container(

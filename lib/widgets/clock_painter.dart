@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:morning/theme.dart';
 import 'package:vector_math/vector_math_64.dart' as Vector;
 
 class ClockPainter extends CustomPainter {
@@ -39,7 +40,7 @@ class ClockPainter extends CustomPainter {
 
     final secondsP2 = Offset(x, y);
 
-    paint.color = Color(0xff65D1BA);
+    paint.color = accentColor;
     paint.strokeWidth = 2;
 
     canvas.drawLine(secondsP1, secondsP2, paint);
@@ -90,7 +91,7 @@ class ClockPainter extends CustomPainter {
       double minute = 360 / 60 * i;
 
       // Set style every 5 minutes
-      paint.color = (i % 5 == 0) ? Color(0xff65D1BA) : Colors.white;
+      paint.color = (i % 5 == 0) ? accentColor : Colors.white;
       paint.strokeWidth = (i % 5 == 0) ? 4 : 1;
 
       int distance = (i % 5 == 0) ? 10 : 15;

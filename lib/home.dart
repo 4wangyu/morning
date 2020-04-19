@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:morning/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:morning/screens/clock_page.dart';
 import 'package:morning/screens/radio_page.dart';
@@ -79,10 +80,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: primaryColor,
           bottom: TabBar(
             controller: _tabController,
-            indicatorColor: Theme.of(context).accentColor,
+            indicatorColor: accentColor,
             indicatorWeight: 4.0,
             tabs: [
               Tab(
@@ -95,7 +96,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           ),
         ),
         body: Container(
-          color: Theme.of(context).primaryColor,
+          color: primaryColor,
           child: TabBarView(
             physics: NeverScrollableScrollPhysics(),
             controller: _tabController,
@@ -125,7 +126,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     return _tabController.index == 1
         ? FloatingActionButton(
             onPressed: () => Navigator.pushNamed(context, '/add-update-alarm'),
-            backgroundColor: Color(0xff65D1BA),
+            backgroundColor: accentColor,
             child: Icon(
               Icons.add,
               size: 20.0,

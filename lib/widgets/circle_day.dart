@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:morning/theme.dart';
 
 Widget circleDay(day, context, selected, setAlarmDay, dayIdx) {
   return GestureDetector(
@@ -6,8 +7,7 @@ Widget circleDay(day, context, selected, setAlarmDay, dayIdx) {
         width: 50.0,
         height: 50.0,
         decoration: BoxDecoration(
-            color:
-                (selected) ? Theme.of(context).accentColor : Colors.transparent,
+            color: (selected) ? accentColor : Colors.transparent,
             borderRadius: BorderRadius.circular(100.0)),
         child: Padding(
           padding: EdgeInsets.all(6.0),

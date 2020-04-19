@@ -61,7 +61,7 @@ class RadioGaGa with ChangeNotifier {
   }
 
   Future<void> loadSongs() async {
-    final String env = 'pro';
+    final String env = 'dev';
     final config = await AppConfig.forEnvironment(env);
     var serverUrl = config.apiUrl;
 

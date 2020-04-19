@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:morning/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:morning/models/alarm_model.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -62,7 +63,7 @@ class AlarmItem extends StatelessWidget {
                   onChanged: (bool val) {
                     alarmProvider.updateAlarmStatus(alarm.id);
                   },
-                  activeColor: Color(0xff65D1BA),
+                  activeColor: accentColor,
                 ),
               ],
             ),
@@ -82,7 +83,7 @@ class AlarmItem extends StatelessWidget {
       actions: <Widget>[
         IconSlideAction(
           caption: 'Update',
-          color: Color(0xff65D1BA),
+          color: accentColor,
           icon: Icons.create,
           onTap: () => Navigator.pushNamed(context, '/add-update-alarm',
               arguments: UpdateAlarmArguments(alarm, alarmIndex)),

@@ -35,9 +35,8 @@ class _AlarmAppState extends State<AlarmApp> {
               '/add-update-alarm': (context) => AddUpdateAlarm(),
             },
             theme: ThemeData(
-                fontFamily: 'SourceSansPro',
-                primaryColor: Color(0xff1B2C57),
-                accentColor: Color(0xff65D1BA)),
+              fontFamily: 'SourceSansPro',
+            ),
             debugShowCheckedModeBanner: false,
             home: Home()));
   }
