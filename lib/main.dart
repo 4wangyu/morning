@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:morning/screens/add_update_alarm.dart';
 import 'package:morning/services/alarm_provider.dart';
 import 'package:morning/services/radio_player.dart';
+import 'package:morning/theme.dart';
 import 'package:provider/provider.dart';
 
 import 'home.dart';
@@ -35,8 +36,9 @@ class _AlarmAppState extends State<AlarmApp> {
               '/add-update-alarm': (context) => AddUpdateAlarm(),
             },
             theme: ThemeData(
-              fontFamily: 'SourceSansPro',
-            ),
+                fontFamily: 'SourceSansPro',
+                primaryColor: primaryColor,
+                accentColor: accentColor),
             debugShowCheckedModeBanner: false,
             home: Home()));
   }
