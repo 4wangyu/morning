@@ -26,7 +26,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this, initialIndex: 0);
+    _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     _tabController.addListener(_handleTabIndex);
 
     Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime());
@@ -91,7 +91,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 text: 'Clock',
               ),
               Tab(icon: Icon(Icons.alarm), text: 'Alarm'),
-              Tab(icon: Icon(Icons.radio), text: 'Radio'),
             ],
           ),
         ),
@@ -111,8 +110,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         return AlarmItem(alarmList[idx], idx);
                       },
                     )),
-              ),
-              Container(child: RadioPage()),
+              )
             ],
           ),
         ),
