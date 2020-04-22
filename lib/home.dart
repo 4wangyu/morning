@@ -2,13 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:morning/theme.dart';
-import 'package:provider/provider.dart';
 import 'package:morning/screens/clock_page.dart';
-import 'package:morning/screens/radio_page.dart';
 import 'package:morning/services/alarm_provider.dart';
-import 'package:morning/services/radio_player.dart';
+import 'package:morning/services/douban_fm.dart';
+import 'package:morning/theme.dart';
 import 'package:morning/widgets/alarm_item.dart';
+import 'package:provider/provider.dart';
 
 import 'models/alarm_model.dart';
 
@@ -20,13 +19,13 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   TabController _tabController;
-  RadioGaGa radio = RadioGaGa();
   AlarmProvider alarmProvider = AlarmProvider();
+  DoubanFm fm = new DoubanFm();
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
+    _tabController = TabController(length: 3, vsync: this, initialIndex: 0);
     _tabController.addListener(_handleTabIndex);
 
     Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime());
@@ -64,9 +63,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           alarmProvider.scheduleAlarm();
         }
 
-        if (!radio.isPlaying) {
-          radio.play();
-        }
+        // if (!radio.isPlaying) {
+        //   radio.play();
+        // }
       }
     }
   }
@@ -91,6 +90,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 text: 'Clock',
               ),
               Tab(icon: Icon(Icons.alarm), text: 'Alarm'),
+              Tab(icon: Icon(Icons.radio), text: 'FM'),
             ],
           ),
         ),
@@ -110,6 +110,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         return AlarmItem(alarmList[idx], idx);
                       },
                     )),
+              ),
+              FlatButton(
+                child: Icon(
+                  Icons.star,
+                  size: 20.0,
+                ),
+                onPressed: () => fm.play(),
               )
             ],
           ),

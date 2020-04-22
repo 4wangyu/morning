@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:morning/screens/add_update_alarm.dart';
 import 'package:morning/services/alarm_provider.dart';
-import 'package:morning/services/radio_player.dart';
 import 'package:morning/theme.dart';
 import 'package:provider/provider.dart';
 
@@ -28,7 +27,6 @@ class _AlarmAppState extends State<AlarmApp> {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider.value(value: AlarmProvider()),
-          ChangeNotifierProvider.value(value: RadioGaGa()),
         ],
         child: MaterialApp(
             initialRoute: '/',
