@@ -111,13 +111,21 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       },
                     )),
               ),
-              FlatButton(
-                child: Icon(
-                  Icons.star,
-                  size: 20.0,
-                ),
-                onPressed: () => fm.play(),
-              )
+              Row(children: [
+                FlatButton(
+                    onPressed: () => fm.play(),
+                    child: Icon(
+                      Icons.play_arrow,
+                      size: 20.0,
+                    )),
+                FlatButton(
+                  onPressed: () => fm.stop(),
+                  child: Icon(
+                    Icons.pause,
+                    size: 20.0,
+                  ),
+                )
+              ]),
             ],
           ),
         ),
