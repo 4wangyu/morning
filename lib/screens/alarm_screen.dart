@@ -3,14 +3,14 @@ import 'package:intl/intl.dart';
 import 'package:morning/services/alarm_provider.dart';
 import 'package:morning/theme.dart';
 import 'package:morning/widgets/slider.dart';
+import 'package:provider/provider.dart';
 
 class AlarmScreen extends StatelessWidget {
-  final AlarmProvider alarmProvider = AlarmProvider();
-
   AlarmScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final alarmProvider = Provider.of<AlarmProvider>(context);
     final now = DateTime.now();
     final format = DateFormat().add_jm();
 
@@ -69,7 +69,6 @@ class AlarmScreen extends StatelessWidget {
                     ),
                     action: () async {
                       alarmProvider.turnOffAlarm();
-                      print(alarmProvider.alarmOn);
                     },
                   ),
                 )

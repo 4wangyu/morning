@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:morning/screens/alarm_screen.dart';
@@ -10,8 +8,6 @@ import 'package:morning/theme.dart';
 import 'package:morning/widgets/alarm_item.dart';
 import 'package:provider/provider.dart';
 
-import 'models/alarm_model.dart';
-
 class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);
 
@@ -20,7 +16,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   TabController _tabController;
-  AlarmProvider alarmProvider = AlarmProvider();
   DoubanFm fm = new DoubanFm();
 
   @override
@@ -28,8 +23,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     super.initState();
     _tabController = TabController(length: 3, vsync: this, initialIndex: 0);
     _tabController.addListener(_handleTabIndex);
-
-    Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime());
   }
 
   @override
@@ -42,34 +35,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   // for display of add alarm button
   void _handleTabIndex() {
     setState(() {});
-  }
-
-  bool _isAlarmOneTime(AlarmModel alarm) {
-    return int.parse(alarm.alarmDays) == 0;
-  }
-
-  void _getTime() {
-    final DateTime now = DateTime.now();
-
-    if (AlarmProvider.nextAlarmTime != null) {
-      int diffSeconds = now.difference(AlarmProvider.nextAlarmTime).inSeconds;
-
-      // print(AlarmProvider.nextAlarmTime);
-      // print(diffSeconds);
-
-      if (diffSeconds == 0) {
-        alarmProvider.alarmOn = true;
-        if (_isAlarmOneTime(alarmProvider.nextAlarm)) {
-          alarmProvider.updateAlarmStatus(alarmProvider.nextAlarm.id);
-        } else {
-          alarmProvider.scheduleAlarm();
-        }
-
-        // if (!radio.isPlaying) {
-        //   radio.play();
-        // }
-      }
-    }
   }
 
   @override

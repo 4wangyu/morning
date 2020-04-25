@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:morning/models/alarm_model.dart';
 import 'package:morning/services/alarms_database.dart';
+import 'package:morning/services/douban_fm.dart';
 
 class AlarmProvider with ChangeNotifier {
   static final AlarmProvider _instance = AlarmProvider._internal();
@@ -13,15 +14,18 @@ class AlarmProvider with ChangeNotifier {
 
   AlarmProvider._internal() {
     this._fetchAlarms();
+    Timer.periodic(Duration(seconds: 1), (Timer t) => _checkAlarm());
   }
 
+  DoubanFm fm = new DoubanFm();
   AlarmsDataBase _dataBase = AlarmsDataBase();
   List<AlarmModel> alarms = [];
   static DateTime nextAlarmTime;
-  AlarmModel nextAlarm;
-  bool alarmOn = true;
+  static AlarmModel nextAlarm;
+  bool alarmOn = false;
 
   turnOffAlarm() {
+    fm.stop();
     alarmOn = !alarmOn;
     notifyListeners();
   }
@@ -52,53 +56,6 @@ class AlarmProvider with ChangeNotifier {
     });
     nextAlarmTime = alarmTime;
     nextAlarm = alarm;
-  }
-
-  bool _isAlarmOneTime(AlarmModel alarm) {
-    return int.parse(alarm.alarmDays) == 0;
-  }
-
-  DateTime _getNextAlarm(AlarmModel alarm) {
-    DateTime today = DateTime.now();
-    if (!_isAlarmOneTime(alarm)) {
-      // repeated alarm
-      int weekday = today.weekday;
-      for (var i = 0; i < 8; i++) {
-        if (alarm.alarmDays[(i + weekday) % 7] == '1') {
-          if (i == 0 &&
-              _constructTime(int.parse(alarm.alarmTime.substring(2, 4)),
-                      int.parse(alarm.alarmTime.substring(0, 2)))
-                  .isAfter(today)) {
-            return _constructTime(
-              int.parse(alarm.alarmTime.substring(2, 4)),
-              int.parse(alarm.alarmTime.substring(0, 2)),
-            );
-          }
-          if (i > 0) {
-            return _constructTime(int.parse(alarm.alarmTime.substring(2, 4)),
-                int.parse(alarm.alarmTime.substring(0, 2)), today.day + i);
-          }
-        }
-      }
-    } else {
-      if (_constructTime(int.parse(alarm.alarmTime.substring(2, 4)),
-              int.parse(alarm.alarmTime.substring(0, 2)))
-          .isAfter(today)) {
-        return _constructTime(
-          int.parse(alarm.alarmTime.substring(2, 4)),
-          int.parse(alarm.alarmTime.substring(0, 2)),
-        );
-      } else {
-        return _constructTime(int.parse(alarm.alarmTime.substring(2, 4)),
-            int.parse(alarm.alarmTime.substring(0, 2)), today.day + 1);
-      }
-    }
-    return null;
-  }
-
-  DateTime _constructTime(int min, int hr, [int day]) {
-    DateTime n = DateTime.now();
-    return DateTime(n.year, n.month, day ?? n.day, hr, min);
   }
 
   void addAlarm(AlarmModel alarmModel) async {
@@ -150,5 +107,74 @@ class AlarmProvider with ChangeNotifier {
       return _alarms.add(AlarmModel.fromObj(alarm));
     });
     return _alarms;
+  }
+
+  bool _isAlarmOneTime(AlarmModel alarm) {
+    return int.parse(alarm.alarmDays) == 0;
+  }
+
+  DateTime _getNextAlarm(AlarmModel alarm) {
+    DateTime today = DateTime.now();
+    if (!_isAlarmOneTime(alarm)) {
+      // repeated alarm
+      int weekday = today.weekday;
+      for (var i = 0; i < 8; i++) {
+        if (alarm.alarmDays[(i + weekday) % 7] == '1') {
+          if (i == 0 &&
+              _constructTime(int.parse(alarm.alarmTime.substring(2, 4)),
+                      int.parse(alarm.alarmTime.substring(0, 2)))
+                  .isAfter(today)) {
+            return _constructTime(
+              int.parse(alarm.alarmTime.substring(2, 4)),
+              int.parse(alarm.alarmTime.substring(0, 2)),
+            );
+          }
+          if (i > 0) {
+            return _constructTime(int.parse(alarm.alarmTime.substring(2, 4)),
+                int.parse(alarm.alarmTime.substring(0, 2)), today.day + i);
+          }
+        }
+      }
+    } else {
+      if (_constructTime(int.parse(alarm.alarmTime.substring(2, 4)),
+              int.parse(alarm.alarmTime.substring(0, 2)))
+          .isAfter(today)) {
+        return _constructTime(
+          int.parse(alarm.alarmTime.substring(2, 4)),
+          int.parse(alarm.alarmTime.substring(0, 2)),
+        );
+      } else {
+        return _constructTime(int.parse(alarm.alarmTime.substring(2, 4)),
+            int.parse(alarm.alarmTime.substring(0, 2)), today.day + 1);
+      }
+    }
+    return null;
+  }
+
+  DateTime _constructTime(int min, int hr, [int day]) {
+    DateTime n = DateTime.now();
+    return DateTime(n.year, n.month, day ?? n.day, hr, min);
+  }
+
+  void _checkAlarm() {
+    DateTime now = DateTime.now();
+
+    if (nextAlarmTime != null) {
+      int diffSeconds = now.difference(AlarmProvider.nextAlarmTime).inSeconds;
+
+      // print(AlarmProvider.nextAlarmTime);
+      // print(diffSeconds);
+
+      if (diffSeconds == 0) {
+        fm.play();
+        alarmOn = true;
+
+        if (_isAlarmOneTime(nextAlarm)) {
+          updateAlarmStatus(nextAlarm.id);
+        } else {
+          scheduleAlarm();
+        }
+      }
+    }
   }
 }
