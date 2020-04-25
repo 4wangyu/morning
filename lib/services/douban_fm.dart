@@ -65,7 +65,7 @@ class DoubanFm {
           String artist = song['artist'];
           String title = song['title'];
           String url = song['url'];
-          nextSong = Song(artist, title, url);
+          nextSong = Song(title, artist, url);
           print('Prefetched: ${nextSong.artist} - ${nextSong.title}');
         } else {
           throw ('Song list is empty.');
