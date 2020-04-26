@@ -123,36 +123,32 @@ class AlarmProvider with ChangeNotifier {
       int weekday = today.weekday;
       for (var i = 0; i < 8; i++) {
         if (alarm.alarmDays[(i + weekday) % 7] == '1') {
-          if (i == 0 &&
-              _constructTime(int.parse(alarm.alarmTime.substring(2, 4)),
-                      int.parse(alarm.alarmTime.substring(0, 2)))
-                  .isAfter(today)) {
-            return _constructTime(
-              int.parse(alarm.alarmTime.substring(2, 4)),
-              int.parse(alarm.alarmTime.substring(0, 2)),
-            );
+          if (i == 0 && _getTime(alarm).isAfter(today)) {
+            return _getTime(alarm);
           }
           if (i > 0) {
-            return _constructTime(int.parse(alarm.alarmTime.substring(2, 4)),
-                int.parse(alarm.alarmTime.substring(0, 2)), today.day + i);
+            return _getTime(alarm, today.day + i);
           }
         }
       }
     } else {
-      if (_constructTime(int.parse(alarm.alarmTime.substring(2, 4)),
-              int.parse(alarm.alarmTime.substring(0, 2)))
-          .isAfter(today)) {
-        return _constructTime(
-          int.parse(alarm.alarmTime.substring(2, 4)),
-          int.parse(alarm.alarmTime.substring(0, 2)),
-        );
+      if (_getTime(alarm).isAfter(today)) {
+        return _getTime(alarm);
       } else {
-        return _constructTime(int.parse(alarm.alarmTime.substring(2, 4)),
-            int.parse(alarm.alarmTime.substring(0, 2)), today.day + 1);
+        return _getTime(alarm, today.day + 1);
       }
     }
     return null;
   }
+
+  DateTime _getTime(AlarmModel alarm, [int day]) {
+    return _constructTime(_getMinute(alarm), _getHour(alarm), day);
+  }
+
+  int _getHour(AlarmModel alarm) => int.parse(alarm.alarmTime.substring(0, 2));
+
+  int _getMinute(AlarmModel alarm) =>
+      int.parse(alarm.alarmTime.substring(2, 4));
 
   DateTime _constructTime(int min, int hr, [int day]) {
     DateTime n = DateTime.now();
