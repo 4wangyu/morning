@@ -27,14 +27,21 @@ class DoubanFm {
     cachePlayer.load(defaultSong);
   }
 
-  play() {
+  play() async {
     // stop playing if another alarm already went off
     stop();
 
     if (nextSong != null) {
-      audioPlayer.play(nextSong.url);
-      print('Playing: ${nextSong.artist} - ${nextSong.title}');
-      _prefetchNextSong();
+      int result = await audioPlayer.play(nextSong.url);
+      print(result);
+      if (result == 1) {
+        print('Playing: ${nextSong.artist} - ${nextSong.title}');
+        _prefetchNextSong();
+      } else {
+        print(
+            "Play error: Cannot play song ${nextSong.artist} - ${nextSong.title}");
+        _playDefaultSong();
+      }
     } else {
       _playDefaultSong();
     }
@@ -74,8 +81,7 @@ class DoubanFm {
         throw ('Http error response.');
       }
     }).catchError((e) {
-      print("Got error: ${e.error}");
-      return 42; // Future completes with 42.
+      print("Fetch error: $e");
     });
   }
 }

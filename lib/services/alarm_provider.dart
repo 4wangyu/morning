@@ -20,8 +20,8 @@ class AlarmProvider with ChangeNotifier {
   DoubanFm fm = new DoubanFm();
   AlarmsDataBase _dataBase = AlarmsDataBase();
   List<AlarmModel> alarms = [];
-  static DateTime nextAlarmTime;
-  static AlarmModel nextAlarm;
+  DateTime nextAlarmTime;
+  AlarmModel nextAlarm;
   bool alarmOn = false;
 
   turnOffAlarm() {
@@ -160,10 +160,10 @@ class AlarmProvider with ChangeNotifier {
     DateTime now = DateTime.now();
 
     if (nextAlarmTime != null) {
-      int diffSeconds = now.difference(AlarmProvider.nextAlarmTime).inSeconds;
+      int diffSeconds = nextAlarmTime.difference(now).inSeconds;
 
-      // print(AlarmProvider.nextAlarmTime);
-      // print(diffSeconds);
+      // print('Next alarm: $nextAlarmTime');
+      // print('Countdown: $diffSeconds');
 
       if (diffSeconds == 0) {
         fm.play();

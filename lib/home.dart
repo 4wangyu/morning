@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:morning/screens/alarm_screen.dart';
 import 'package:morning/screens/clock_page.dart';
 import 'package:morning/services/alarm_provider.dart';
-import 'package:morning/services/douban_fm.dart';
 import 'package:morning/theme.dart';
 import 'package:morning/widgets/alarm_item.dart';
 import 'package:provider/provider.dart';
@@ -16,12 +15,11 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   TabController _tabController;
-  DoubanFm fm = new DoubanFm();
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this, initialIndex: 0);
+    _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     _tabController.addListener(_handleTabIndex);
   }
 
@@ -45,7 +43,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     return alarmProvider.alarmOn
         ? AlarmScreen()
         : DefaultTabController(
-            length: 3,
+            length: 2,
             child: Scaffold(
               appBar: AppBar(
                 backgroundColor: primaryColor,
@@ -59,7 +57,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       text: 'Clock',
                     ),
                     Tab(icon: Icon(Icons.alarm), text: 'Alarm'),
-                    Tab(icon: Icon(Icons.radio), text: 'FM'),
                   ],
                 ),
               ),
@@ -80,28 +77,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                             },
                           )),
                     ),
-                    Row(children: [
-                      FlatButton(
-                          onPressed: () => fm.play(),
-                          child: Icon(
-                            Icons.play_arrow,
-                            size: 20.0,
-                          )),
-                      FlatButton(
-                        onPressed: () => fm.stop(),
-                        child: Icon(
-                          Icons.pause,
-                          size: 20.0,
-                        ),
-                      ),
-                      FlatButton(
-                        onPressed: () => alarmProvider.turnOffAlarm(),
-                        child: Icon(
-                          Icons.open_in_new,
-                          size: 20.0,
-                        ),
-                      ),
-                    ]),
                   ],
                 ),
               ),

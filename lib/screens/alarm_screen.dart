@@ -6,13 +6,15 @@ import 'package:morning/widgets/slider.dart';
 import 'package:provider/provider.dart';
 
 class AlarmScreen extends StatelessWidget {
+  final format = DateFormat().add_jm();
+  final now = DateTime.now()
+      .add(Duration(seconds: 4)); // make sure the display time is correct
+
   AlarmScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final alarmProvider = Provider.of<AlarmProvider>(context);
-    final now = DateTime.now();
-    final format = DateFormat().add_jm();
 
     return Scaffold(
         body: Container(
@@ -59,12 +61,10 @@ class AlarmScreen extends StatelessWidget {
                     backgroundColor: accentColor,
                     width: 230,
                     icon: Center(
-                        child: Icon(
-                      Icons.chevron_right,
-                      size: 40,
-                    )),
+                        child: Icon(Icons.chevron_right,
+                            size: 40, color: primaryColor)),
                     label: Text(
-                      'Turn off alarm !',
+                      'Turn off !',
                       style: TextStyle(color: primaryColor, fontSize: 26),
                     ),
                     action: () async {
