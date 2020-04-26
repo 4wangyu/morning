@@ -4,7 +4,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:morning/models/alarm_model.dart';
 
-class AlarmsDataBase {
+class AlarmDataBase {
   Database _db;
   final String _alarmsTable = "alarms";
   final String _id = "id";

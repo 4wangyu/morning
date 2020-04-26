@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:morning/models/alarm_model.dart';
-import 'package:morning/services/alarms_database.dart';
+import 'package:morning/services/alarm_database.dart';
 import 'package:morning/services/douban_fm.dart';
 
 class AlarmProvider with ChangeNotifier {
@@ -18,15 +18,16 @@ class AlarmProvider with ChangeNotifier {
   }
 
   DoubanFm fm = new DoubanFm();
-  AlarmsDataBase _dataBase = AlarmsDataBase();
+  AlarmDataBase _dataBase = AlarmDataBase();
   List<AlarmModel> alarms = [];
+
   DateTime nextAlarmTime;
-  AlarmModel nextAlarm;
+  List<AlarmModel> nextAlarmList;
   bool alarmOn = false;
 
   turnOffAlarm() {
     fm.stop();
-    alarmOn = !alarmOn;
+    alarmOn = false;
     notifyListeners();
   }
 
@@ -42,27 +43,29 @@ class AlarmProvider with ChangeNotifier {
     return id;
   }
 
-  scheduleAlarm() {
+  _scheduleAlarm() {
     List<AlarmModel> activeAlarms =
         alarms.where((alarm) => alarm.active == 1).toList();
     DateTime alarmTime;
-    AlarmModel alarm;
+    List<AlarmModel> alarmList;
     activeAlarms.forEach((a) {
       DateTime earliestAlarm = _getNextAlarm(a);
       if (alarmTime == null || earliestAlarm.isBefore(alarmTime)) {
         alarmTime = earliestAlarm;
-        alarm = a;
+        alarmList = [a];
+      } else if (earliestAlarm.isAtSameMomentAs(alarmTime)) {
+        alarmList.add(a);
       }
     });
     nextAlarmTime = alarmTime;
-    nextAlarm = alarm;
+    nextAlarmList = alarmList;
   }
 
   void addAlarm(AlarmModel alarmModel) async {
     alarms.add(alarmModel);
     _sortAlarms();
     notifyListeners();
-    scheduleAlarm();
+    _scheduleAlarm();
     await _dataBase.saveAlarm(alarmModel);
   }
 
@@ -70,14 +73,14 @@ class AlarmProvider with ChangeNotifier {
     alarms[index] = alarmModel;
     _sortAlarms();
     notifyListeners();
-    scheduleAlarm();
+    _scheduleAlarm();
     await _dataBase.updateItem(alarmModel.id, alarmModel);
   }
 
   void deleteAlarm(id, index) async {
     alarms.removeAt(index);
     notifyListeners();
-    scheduleAlarm();
+    _scheduleAlarm();
     await _dataBase.deleteItem(id);
   }
 
@@ -85,7 +88,7 @@ class AlarmProvider with ChangeNotifier {
     AlarmModel alarm = alarms.firstWhere((a) => a.id == id);
     alarm.active = 1 - alarm.active;
     notifyListeners();
-    scheduleAlarm();
+    _scheduleAlarm();
     await _dataBase.updateItem(id, alarm);
   }
 
@@ -93,7 +96,7 @@ class AlarmProvider with ChangeNotifier {
     alarms = await _fetchDateBaseAlarms();
     _sortAlarms();
     notifyListeners();
-    scheduleAlarm();
+    _scheduleAlarm();
   }
 
   _sortAlarms() {
@@ -168,13 +171,17 @@ class AlarmProvider with ChangeNotifier {
       if (diffSeconds == 0) {
         fm.play();
         alarmOn = true;
-
-        if (_isAlarmOneTime(nextAlarm)) {
-          updateAlarmStatus(nextAlarm.id);
-        } else {
-          scheduleAlarm();
-        }
+        _deactivateAlarms(nextAlarmList);
+        _scheduleAlarm();
       }
     }
+  }
+
+  void _deactivateAlarms(List<AlarmModel> alarmList) {
+    alarmList.forEach((alarm) {
+      if (_isAlarmOneTime(alarm)) {
+        updateAlarmStatus(alarm.id);
+      }
+    });
   }
 }
