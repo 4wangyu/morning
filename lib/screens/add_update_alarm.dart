@@ -127,7 +127,7 @@ class _AddUpdateAlarmState extends State<AddUpdateAlarm> {
                 FlatButton(
                     color: accentColor,
                     child: Text('Save',
-                        style: TextStyle(fontSize: 20, color: Colors.white)),
+                        style: TextStyle(fontSize: 20, color: primaryColor)),
                     onPressed: () async {
                       if (_isUpdate) {
                         alarmProvider.updateAlarm(
