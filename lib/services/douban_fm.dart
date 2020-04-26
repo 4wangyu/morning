@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:http/http.dart' as http;
+import 'package:morning/services/connectivity.dart';
 
 class DoubanFm {
   final String fmPlaylistUrl =
@@ -31,9 +32,10 @@ class DoubanFm {
     // stop playing if another alarm already went off
     stop();
 
-    if (nextSong != null) {
+    bool hasConnection = await checkInternetConnection();
+
+    if (nextSong != null && hasConnection) {
       int result = await audioPlayer.play(nextSong.url);
-      print(result);
       if (result == 1) {
         print('Playing: ${nextSong.artist} - ${nextSong.title}');
         _prefetchNextSong();
