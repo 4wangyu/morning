@@ -70,7 +70,7 @@ class _AddUpdateAlarmState extends State<AddUpdateAlarm> {
         ),
       ),
       body: Padding(
-          padding: EdgeInsets.all(10.0),
+          padding: EdgeInsets.all(4.0),
           child: Container(
             child: Column(
               children: <Widget>[

@@ -24,8 +24,8 @@ class AlarmScreen extends StatelessWidget {
               children: <Widget>[
                 Center(
                   child: Container(
-                    width: 325,
-                    height: 325,
+                    width: 300,
+                    height: 300,
                     decoration: ShapeDecoration(
                         shape: CircleBorder(
                             side: BorderSide(
