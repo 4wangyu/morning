@@ -43,24 +43,6 @@ class AlarmProvider with ChangeNotifier {
     return id;
   }
 
-  _scheduleAlarm() {
-    List<AlarmModel> activeAlarms =
-        alarms.where((alarm) => alarm.active == 1).toList();
-    DateTime alarmTime;
-    List<AlarmModel> alarmList;
-    activeAlarms.forEach((a) {
-      DateTime earliestAlarm = _getNextAlarm(a);
-      if (alarmTime == null || earliestAlarm.isBefore(alarmTime)) {
-        alarmTime = earliestAlarm;
-        alarmList = [a];
-      } else if (earliestAlarm.isAtSameMomentAs(alarmTime)) {
-        alarmList.add(a);
-      }
-    });
-    nextAlarmTime = alarmTime;
-    nextAlarmList = alarmList;
-  }
-
   void addAlarm(AlarmModel alarmModel) async {
     alarms.add(alarmModel);
     _sortAlarms();
@@ -97,6 +79,24 @@ class AlarmProvider with ChangeNotifier {
     _sortAlarms();
     notifyListeners();
     _scheduleAlarm();
+  }
+
+  _scheduleAlarm() {
+    List<AlarmModel> activeAlarms =
+        alarms.where((alarm) => alarm.active == 1).toList();
+    DateTime alarmTime;
+    List<AlarmModel> alarmList;
+    activeAlarms.forEach((a) {
+      DateTime earliestAlarm = _getNextAlarm(a);
+      if (alarmTime == null || earliestAlarm.isBefore(alarmTime)) {
+        alarmTime = earliestAlarm;
+        alarmList = [a];
+      } else if (earliestAlarm.isAtSameMomentAs(alarmTime)) {
+        alarmList.add(a);
+      }
+    });
+    nextAlarmTime = alarmTime;
+    nextAlarmList = alarmList;
   }
 
   _sortAlarms() {
