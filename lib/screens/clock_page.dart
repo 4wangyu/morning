@@ -43,13 +43,14 @@ class _ClockPageState extends State<ClockPage> {
   Widget build(BuildContext context) {
     return Container(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Padding(
             padding: EdgeInsets.all(8.0),
             child: CustomPaint(
               painter: ClockPainter(),
               child: Container(
-                height: 500,
+                height: 270,
               ),
             ),
           ),

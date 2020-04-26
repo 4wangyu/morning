@@ -45,21 +45,23 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         : DefaultTabController(
             length: 2,
             child: Scaffold(
-              appBar: AppBar(
-                backgroundColor: primaryColor,
-                bottom: TabBar(
-                  controller: _tabController,
-                  indicatorColor: accentColor,
-                  indicatorWeight: 4.0,
-                  tabs: [
-                    Tab(
-                      icon: Icon(Icons.access_time),
-                      text: 'Clock',
+              appBar: PreferredSize(
+                  preferredSize: Size.fromHeight(84.0),
+                  child: AppBar(
+                    backgroundColor: primaryColor,
+                    bottom: TabBar(
+                      controller: _tabController,
+                      indicatorColor: accentColor,
+                      indicatorWeight: 4.0,
+                      tabs: [
+                        Tab(
+                          icon: Icon(Icons.access_time),
+                          text: 'Clock',
+                        ),
+                        Tab(icon: Icon(Icons.alarm), text: 'Alarm'),
+                      ],
                     ),
-                    Tab(icon: Icon(Icons.alarm), text: 'Alarm'),
-                  ],
-                ),
-              ),
+                  )),
               body: Container(
                 color: primaryColor,
                 child: TabBarView(
@@ -67,16 +69,14 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   controller: _tabController,
                   children: [
                     ClockPage(),
-                    Container(
-                      child: Padding(
-                          padding: EdgeInsets.only(top: 10.0),
-                          child: ListView.builder(
-                            itemCount: alarmList.length,
-                            itemBuilder: (context, idx) {
-                              return AlarmItem(alarmList[idx], idx);
-                            },
-                          )),
-                    ),
+                    Padding(
+                        padding: EdgeInsets.only(top: 10.0),
+                        child: ListView.builder(
+                          itemCount: alarmList.length,
+                          itemBuilder: (context, idx) {
+                            return AlarmItem(alarmList[idx], idx);
+                          },
+                        )),
                   ],
                 ),
               ),
